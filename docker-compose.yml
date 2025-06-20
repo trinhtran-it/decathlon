@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: decathlon-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootpassword
+    networks:
+      - decathlon-network
+
+  retail-product-vietnam:
+    build:
+      context: ./RetailProductVietnam
+      dockerfile: Dockerfile
+    container_name: decathlon-retail-product-vietnam
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGODB_URI=mongodb://root:rootpassword@decathlon-mongodb:27017/retail-product-vietnam?authSource=admin
+      - RETAIL_STOCK_UNITED_API_URL=http://decathlon-retail-stock-united:8080/api/v1
+      - RETAIL_STOCK_UNITED_API_KEY=decathlon-retail-stock-united-key-2025
+      - PORT=3001
+    depends_on:
+      - mongodb
+      - decathlon-retail-stock-united
+    networks:
+      - decathlon-network
+
+  decathlon-retail-stock-united:
+    build:
+      context: ./RetailStockUnited
+      dockerfile: Dockerfile
+    container_name: decathlon-retail-stock-united
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/retailstockunited
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_PROFILES_ACTIVE: docker
+      API_KEY: decathlon-retail-stock-united-key-2025
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - decathlon-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: decathlon-postgres
+    environment:
+      POSTGRES_DB: retailstockunited
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - decathlon-network
+
+  decathlon-apac-website:
+    build:
+      context: ./APACWebsite
+      dockerfile: Dockerfile
+    container_name: decathlon-apac-website
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://decathlon-retail-product-vietnam:3001/api/v1
+    depends_on:
+      - retail-product-vietnam
+    networks:
+      - decathlon-network
+
+volumes:
+  postgres_data:
+    driver: local
+  mongodb_data:
+    driver: local
+
+networks:
+  decathlon-network:
+    driver: bridge
