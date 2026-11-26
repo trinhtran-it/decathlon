@@ -31,7 +31,7 @@ export class ProductSeed {
         description: 'Professional running shoes with advanced cushioning for long-distance runs',
         imageUrl: 'https://contents.mediadecathlon.com/p2819293/sq/k$dcef0a13ada1ab05d340747e26e9cebe/gi%C3%A0y-ch%E1%BA%A1y-b%E1%BB%99-ch%E1%BA%A1y-trail-nam-jf190-1-grip-xanh-d%C6%B0%C6%A1ng-kalenji-8913912.jpg',
         category: 'Footwear',
-        brand: 'Decathlon',
+        brand: 'Kalenji',
         weight: 280,
         attributes: { 
           color: 'Black/Red', 

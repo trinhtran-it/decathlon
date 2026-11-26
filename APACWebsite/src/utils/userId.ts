@@ -11,14 +11,14 @@ export function getUserId(): string {
   }
   
   // Check if userId already exists in localStorage
-  let userId = localStorage.getItem('decathlon_user_id');
+  let userId = localStorage.getItem('retail_user_id');
   
   if (!userId) {
     // Generate a new userId if one doesn't exist
     userId = generateUserId();
     
     // Store in localStorage for future sessions
-    localStorage.setItem('decathlon_user_id', userId);
+    localStorage.setItem('retail_user_id', userId);
   }
   
   return userId;
