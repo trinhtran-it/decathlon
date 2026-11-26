@@ -28,11 +28,11 @@ services:
       - PORT=3001
     depends_on:
       - mongodb
-      - decathlon-retail-stock-united
+      - retail-stock-united
     networks:
       - decathlon-network
 
-  decathlon-retail-stock-united:
+  retail-stock-united:
     build:
       context: ./RetailStockUnited
       dockerfile: Dockerfile
@@ -70,7 +70,7 @@ services:
     networks:
       - decathlon-network
 
-  decathlon-apac-website:
+  apac-website:
     build:
       context: ./APACWebsite
       dockerfile: Dockerfile

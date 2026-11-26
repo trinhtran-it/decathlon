@@ -1,8 +1,8 @@
-# Decathlon APAC Retail System
+# APAC Retail System
 
 ## Architecture Overview
 
-This project implements a microservice-based architecture for Decathlon's APAC retail operations, consisting of three main components:
+This project implements a microservice-based architecture for APAC retail operations, consisting of three main components:
 
 1. **APAC Website** - A Next.js-based frontend application that provides the user interface for customers to browse products and manage their shopping cart.
 
@@ -30,8 +30,8 @@ This project implements a microservice-based architecture for Decathlon's APAC r
 1. **Clone the repository**
 
 ```bash
-git clone git@github.com:trinhtran-it/decathlon.git
-cd decathlon
+git clone git@github.com:trinhtran-it/retail-stock-microservices.git
+cd retail-stock-microservices
 ```
 
 2. **Pull required Docker images and start the services**
@@ -54,7 +54,7 @@ docker-compose up --build --force-recreate
 
 ```bash
 # Example: Rebuild the APAC Website container
-docker-compose build --no-cache decathlon-apac-website
+docker-compose build --no-cache apac-website
 docker-compose up
 ```
 
@@ -141,9 +141,9 @@ node src/product/load-test-stock-api.js
 
 - To view logs for a specific service:
   ```bash
-  docker-compose logs -f decathlon-apac-website
+  docker-compose logs -f apac-website
   docker-compose logs -f retail-product-vietnam
-  docker-compose logs -f decathlon-retail-stock-united
+  docker-compose logs -f retail-stock-united
   ```
 
 - If you need to reset the databases:
