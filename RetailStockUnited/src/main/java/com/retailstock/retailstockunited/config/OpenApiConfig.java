@@ -13,7 +13,6 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springdoc.core.customizers.OperationCustomizer;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
@@ -24,11 +23,8 @@ import java.util.List;
 @Configuration
 public class OpenApiConfig {
 
-    // The actual API key value used for authentication
-    @Value("${api.key}")
-    private String apiKeyValue;
-    
-    private static final String API_KEY = "retail-stock-united-key-2025";
+    // The API key value is intentionally never published in the docs.
+    // Clients obtain it from configuration (RETAIL_STOCK_UNITED_API_KEY in .env).
     private static final String SECURITY_SCHEME_NAME = "apiKey";
 
     @Bean
@@ -39,14 +35,14 @@ public class OpenApiConfig {
                         .description("API documentation for the RetailStockUnited service, which provides real-time stock information for retail products." +
                                 "\n\n## 🔑 Authentication Required" +
                                 "\n\n**IMPORTANT:** This API requires API key authentication. All requests must include the API key in the `X-API-KEY` header." +
-                                "\n\n**API Key Value:** `" + API_KEY + "`" +
+                                "\n\nThe key is configured via `RETAIL_STOCK_UNITED_API_KEY` in your local `.env` file (see `.env.example`)." +
                                 "\n\n### How to Authorize in Swagger UI:" +
                                 "\n1. Click the 'Authorize' button (🔓) at the top right of this page" +
-                                "\n2. Enter the API key: `" + API_KEY + "` in the value field" +
+                                "\n2. Enter your API key in the value field" +
                                 "\n3. Click 'Authorize' and then 'Close'" +
                                 "\n\n**Without authorization, all API calls will fail with a 401 error.**" +
                                 "\n\n**Example curl command:**" +
-                                "\n```bash\ncurl -X GET \"http://localhost:8080/api/v1/stocks\" -H \"X-API-KEY: " + API_KEY + "\"\n```" +
+                                "\n```bash\ncurl -X GET \"http://localhost:8080/api/v1/stocks\" -H \"X-API-KEY: $RETAIL_STOCK_UNITED_API_KEY\"\n```" +
                                 "\n\n**Response Codes:**\n" +
                                 "- 401 Unauthorized: Missing or invalid API key" +
                                 "\n- 403 Forbidden: API key has insufficient permissions")
@@ -63,7 +59,7 @@ public class OpenApiConfig {
                                 .type(SecurityScheme.Type.APIKEY)
                                 .in(SecurityScheme.In.HEADER)
                                 .name("X-API-KEY")
-                                .description("API Key Authentication: Enter the value `" + API_KEY + "` in this field.")))
+                                .description("API Key Authentication: enter the value of RETAIL_STOCK_UNITED_API_KEY from your .env file.")))
                 // Add a global security requirement
                 .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME));
     }
@@ -79,7 +75,7 @@ public class OpenApiConfig {
                 .name("X-API-KEY")
                 .description("API Key for authentication")
                 .required(true)
-                .schema(new StringSchema().example(API_KEY));
+                .schema(new StringSchema());
             
             // Add security requirement to ensure the API key is included in Swagger UI
             if (operation.getSecurity() == null || operation.getSecurity().isEmpty()) {

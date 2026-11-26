@@ -34,7 +34,16 @@ git clone git@github.com:trinhtran-it/retail-stock-microservices.git
 cd retail-stock-microservices
 ```
 
-2. **Pull required Docker images and start the services**
+2. **Configure local secrets**
+
+```bash
+cp .env.example .env
+# Edit .env and replace every "change-me" value
+```
+
+`.env` is git-ignored and holds all credentials (database users/passwords and the inter-service API key). `docker-compose` refuses to start if any required value is missing.
+
+3. **Pull required Docker images and start the services**
 
 ```bash
 # Pull the required JRE image for RetailStockUnited
@@ -44,13 +53,13 @@ docker pull --platform linux/amd64 eclipse-temurin:17-jre-alpine
 docker-compose up --build
 ```
 
-3. **Alternative: Force a clean rebuild of all containers**
+4. **Alternative: Force a clean rebuild of all containers**
 
 ```bash
 docker-compose up --build --force-recreate
 ```
 
-4. **Rebuild a specific service (e.g., after code changes)**
+5. **Rebuild a specific service (e.g., after code changes)**
 
 ```bash
 # Example: Rebuild the APAC Website container
@@ -58,7 +67,7 @@ docker-compose build --no-cache apac-website
 docker-compose up
 ```
 
-5. **Access the applications**
+6. **Access the applications**
 
 - APAC Website: http://localhost:3000
 - Retail Product Vietnam API: http://localhost:3001
@@ -66,17 +75,19 @@ docker-compose up
 
 ## Database Access
 
+Credentials come from your local `.env` file (see `.env.example`); none are stored in the repository.
+
 - **MongoDB** (for product data):
   - URL: mongodb://localhost:27017
-  - Username: root
-  - Password: rootpassword
+  - Credentials: `MONGO_ROOT_USERNAME` / `MONGO_ROOT_PASSWORD`
   - Database: retail-product-vietnam
 
 - **PostgreSQL** (for stock data):
   - URL: postgresql://localhost:5432
-  - Username: postgres
-  - Password: postgres
+  - Credentials: `POSTGRES_USER` / `POSTGRES_PASSWORD`
   - Database: retailstockunited
+
+> Databases are initialised with these credentials on first start only. If you change them in `.env`, reset the volumes with `docker-compose down -v`.
 
 ## API Documentation
 

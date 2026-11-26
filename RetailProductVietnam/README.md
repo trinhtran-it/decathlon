@@ -94,8 +94,10 @@ RETAIL_STOCK_UNITED_API_KEY=your-api-key
 PORT=3001
 
 # For Docker environment
-MONGODB_URI=mongodb://root:rootpassword@mongodb:27017/retail-product-vietnam?authSource=admin
+# docker-compose builds these from the root .env file (see ../.env.example)
+MONGODB_URI=mongodb://<MONGO_ROOT_USERNAME>:<MONGO_ROOT_PASSWORD>@mongodb:27017/retail-product-vietnam?authSource=admin
 RETAIL_STOCK_UNITED_API_URL=http://retail-stock-united:8080/api/v1
+RETAIL_STOCK_UNITED_API_KEY=<RETAIL_STOCK_UNITED_API_KEY>
 ```
 
 ## Getting Started

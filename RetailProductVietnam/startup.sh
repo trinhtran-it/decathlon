@@ -20,12 +20,15 @@ node dist/cli.js seed:products || echo "Seeding may have failed but continuing s
 
 # Create compound index on carts collection
 echo "Creating compound unique index on carts collection..."
-mongosh ${MONGODB_URI:-"mongodb://root:rootpassword@mongodb:27017/retail-product-vietnam?authSource=admin"} --eval '
+# Disable tracing so the connection string (which contains credentials) is not written to logs
+set +x
+mongosh "${MONGODB_URI:?MONGODB_URI must be set (docker-compose builds it from .env)}" --quiet --eval '
   db.carts.createIndex(
     { userId: 1, productId: 1 },
     { unique: true, background: true }
   )
 ' || echo "Index creation may have failed but continuing startup"
+set -x
 
 # Start the application
 echo "Starting the application..."
