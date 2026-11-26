@@ -94,8 +94,8 @@ RETAIL_STOCK_UNITED_API_KEY=your-api-key
 PORT=3001
 
 # For Docker environment
-MONGODB_URI=mongodb://root:rootpassword@decathlon-mongodb:27017/retail-product-vietnam?authSource=admin
-RETAIL_STOCK_UNITED_API_URL=http://decathlon-retail-stock-united:8080/api/v1
+MONGODB_URI=mongodb://root:rootpassword@mongodb:27017/retail-product-vietnam?authSource=admin
+RETAIL_STOCK_UNITED_API_URL=http://retail-stock-united:8080/api/v1
 ```
 
 ## Getting Started

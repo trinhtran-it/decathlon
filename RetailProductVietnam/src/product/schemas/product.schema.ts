@@ -30,7 +30,7 @@ export class Product {
   @Prop()
   category: string;
 
-  @ApiProperty({ description: 'Product brand', example: 'Decathlon' })
+  @ApiProperty({ description: 'Product brand', example: 'Acme Sports' })
   @Prop()
   brand: string;
 

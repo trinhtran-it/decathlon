@@ -32,7 +32,7 @@ export class CreateProductDto {
   @IsString()
   category?: string;
 
-  @ApiPropertyOptional({ description: 'Product brand', example: 'Decathlon' })
+  @ApiPropertyOptional({ description: 'Product brand', example: 'Acme Sports' })
   @IsOptional()
   @IsString()
   brand?: string;

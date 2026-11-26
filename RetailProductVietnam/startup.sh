@@ -5,7 +5,7 @@ set -x
 
 # Wait for MongoDB to be ready
 echo "Waiting for MongoDB to be ready..."
-until nc -z decathlon-mongodb 27017; do
+until nc -z mongodb 27017; do
   echo "MongoDB is unavailable - sleeping"
   sleep 5
 done
@@ -20,7 +20,7 @@ node dist/cli.js seed:products || echo "Seeding may have failed but continuing s
 
 # Create compound index on carts collection
 echo "Creating compound unique index on carts collection..."
-mongosh ${MONGODB_URI:-"mongodb://root:rootpassword@decathlon-mongodb:27017/retail-product-vietnam?authSource=admin"} --eval '
+mongosh ${MONGODB_URI:-"mongodb://root:rootpassword@mongodb:27017/retail-product-vietnam?authSource=admin"} --eval '
   db.carts.createIndex(
     { userId: 1, productId: 1 },
     { unique: true, background: true }

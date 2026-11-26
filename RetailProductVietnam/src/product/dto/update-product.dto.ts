@@ -21,7 +21,7 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
   @ApiPropertyOptional({ description: 'Product category', example: 'Clothing' })
   category?: string;
 
-  @ApiPropertyOptional({ description: 'Product brand', example: 'Decathlon' })
+  @ApiPropertyOptional({ description: 'Product brand', example: 'Acme Sports' })
   brand?: string;
 
   @ApiPropertyOptional({ description: 'Product weight in grams', example: 150 })

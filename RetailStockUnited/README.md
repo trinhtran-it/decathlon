@@ -1,6 +1,6 @@
 # RetailStockUnited Service
 
-This service is the global master for stock data for Decathlon. It provides a RESTful API to manage product stock levels.
+This service is the global master for stock data. It provides a RESTful API to manage product stock levels.
 
 ## API Documentation
 The API documentation is available at: http://localhost:8080/swagger-ui/index.html when running the service locally or http://<host>:8080/swagger-ui/index.html in your deployment environment.
@@ -63,7 +63,7 @@ mvn spring-boot:run
 All API endpoints require an API key to be sent in the `X-API-KEY` request header:
 
 ```
-X-API-KEY: decathlon-retail-stock-united-key-2025
+X-API-KEY: retail-stock-united-key-2025
 ```
 
 ### Endpoints
